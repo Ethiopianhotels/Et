@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ethiopian Proverbs & Wisdom</title>
+    <title>Free Unit Converter | Length, Weight, Temperature</title>
+    <meta name="description" content="Simple, fast unit converter for length, weight, and temperature. Free online tool – convert meters to feet, kilograms to pounds, Celsius to Fahrenheit.">
     <style>
         * {
             margin: 0;
@@ -12,10 +13,11 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f0e1 0%, #e8e0c8 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 1rem;
         }
 
         .container {
@@ -23,18 +25,362 @@
             margin: 0 auto;
         }
 
-        /* Ethiopian pattern border */
+        /* Header */
         .header {
-            background: #1e3c72;
-            color: white;
-            padding: 30px 20px;
             text-align: center;
-            border-radius: 40px 40px 0 0;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 2rem;
+            padding: 1.5rem 0;
         }
 
-        .header::before {
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1e293b, #2d3a5e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .sub {
+            color: #475569;
+            font-size: 1rem;
+        }
+
+        /* Ad placeholder – REPLACE with your AdSense code */
+        .ad-placeholder {
+            background: #e9ecef;
+            border-radius: 12px;
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            color: #6c757d;
+            border: 1px dashed #adb5bd;
+        }
+
+        /* Card style for converter */
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3b82f6;
+            padding-left: 0.75rem;
+        }
+
+        .converter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+
+        .input-field {
+            flex: 2;
+            min-width: 140px;
+        }
+
+        .select-field {
+            flex: 1.5;
+            min-width: 120px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 0.25rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+
+        .result {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            border-left: 4px solid #10b981;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .converter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>⚡ Universal Converter</h1>
+        <p class="sub">Length · Weight · Temperature — instant, free, no signup</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!--  REPLACE THIS BLOCK WITH YOUR ADSENSE CODE  -->
+    <!-- ========================================== -->
+    <div class="ad-placeholder">
+        📢 <strong>Your AdSense Ad</strong><br>
+        Replace this div with your actual AdSense unit code.
+    </div>
+    <!-- ========================================== -->
+
+    <!-- LENGTH CONVERTER -->
+    <div class="card">
+        <h2>📏 Length</h2>
+        <div class="converter-group">
+            <div class="input-field">
+                <label>Value</label>
+                <input type="number" id="length-value" placeholder="Enter number" value="1" step="any">
+            </div>
+            <div class="select-field">
+                <label>From</label>
+                <select id="length-from">
+                    <option value="meter">Meter (m)</option>
+                    <option value="kilometer">Kilometer (km)</option>
+                    <option value="mile">Mile (mi)</option>
+                    <option value="foot">Foot (ft)</option>
+                    <option value="inch">Inch (in)</option>
+                </select>
+            </div>
+            <div class="select-field">
+                <label>To</label>
+                <select id="length-to">
+                    <option value="meter">Meter (m)</option>
+                    <option value="kilometer">Kilometer (km)</option>
+                    <option value="mile" selected>Mile (mi)</option>
+                    <option value="foot">Foot (ft)</option>
+                    <option value="inch">Inch (in)</option>
+                </select>
+            </div>
+        </div>
+        <div class="result" id="length-result">→ Result: 0.000621 miles</div>
+    </div>
+
+    <!-- WEIGHT CONVERTER -->
+    <div class="card">
+        <h2>⚖️ Weight</h2>
+        <div class="converter-group">
+            <div class="input-field">
+                <label>Value</label>
+                <input type="number" id="weight-value" placeholder="Enter number" value="1" step="any">
+            </div>
+            <div class="select-field">
+                <label>From</label>
+                <select id="weight-from">
+                    <option value="kg">Kilogram (kg)</option>
+                    <option value="gram">Gram (g)</option>
+                    <option value="pound">Pound (lb)</option>
+                    <option value="ounce">Ounce (oz)</option>
+                </select>
+            </div>
+            <div class="select-field">
+                <label>To</label>
+                <select id="weight-to">
+                    <option value="kg">Kilogram (kg)</option>
+                    <option value="gram">Gram (g)</option>
+                    <option value="pound" selected>Pound (lb)</option>
+                    <option value="ounce">Ounce (oz)</option>
+                </select>
+            </div>
+        </div>
+        <div class="result" id="weight-result">→ Result: 2.20462 pounds</div>
+    </div>
+
+    <!-- TEMPERATURE CONVERTER -->
+    <div class="card">
+        <h2>🌡️ Temperature</h2>
+        <div class="converter-group">
+            <div class="input-field">
+                <label>Value</label>
+                <input type="number" id="temp-value" placeholder="Enter number" value="0" step="any">
+            </div>
+            <div class="select-field">
+                <label>From</label>
+                <select id="temp-from">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+            <div class="select-field">
+                <label>To</label>
+                <select id="temp-to">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit" selected>Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+        </div>
+        <div class="result" id="temp-result">→ Result: 32 °F</div>
+    </div>
+
+    <div class="ad-placeholder">
+        📢 <strong>Second Ad Spot</strong><br>
+        You can place another AdSense unit here.
+    </div>
+
+    <div class="footer">
+        <p>🔁 Accurate conversions • 100% free • No data stored</p>
+        <p>© 2025 Universal Converter — <a href="#" style="color:#3b82f6;">Privacy Policy</a> | <a href="#" style="color:#3b82f6;">Contact</a></p>
+    </div>
+</div>
+
+<script>
+    // ---- Conversion factors (base unit: meter) ----
+    const lengthUnits = {
+        meter: 1,
+        kilometer: 1000,
+        mile: 1609.344,
+        foot: 0.3048,
+        inch: 0.0254
+    };
+
+    function convertLength(value, fromUnit, toUnit) {
+        if (isNaN(value)) return 0;
+        const meters = value * lengthUnits[fromUnit];
+        return meters / lengthUnits[toUnit];
+    }
+
+    function updateLength() {
+        let value = parseFloat(document.getElementById('length-value').value);
+        if (isNaN(value)) value = 0;
+        const from = document.getElementById('length-from').value;
+        const to = document.getElementById('length-to').value;
+        const result = convertLength(value, from, to);
+        const toLabel = document.getElementById('length-to').options[document.getElementById('length-to').selectedIndex].text;
+        document.getElementById('length-result').innerHTML = `→ Result: ${result.toFixed(6)} ${toLabel}`;
+    }
+
+    // ---- Weight (base: kg) ----
+    const weightUnits = {
+        kg: 1,
+        gram: 0.001,
+        pound: 0.45359237,
+        ounce: 0.028349523125
+    };
+
+    function convertWeight(value, fromUnit, toUnit) {
+        if (isNaN(value)) return 0;
+        const kg = value * weightUnits[fromUnit];
+        return kg / weightUnits[toUnit];
+    }
+
+    function updateWeight() {
+        let value = parseFloat(document.getElementById('weight-value').value);
+        if (isNaN(value)) value = 0;
+        const from = document.getElementById('weight-from').value;
+        const to = document.getElementById('weight-to').value;
+        const result = convertWeight(value, from, to);
+        const toLabel = document.getElementById('weight-to').options[document.getElementById('weight-to').selectedIndex].text;
+        document.getElementById('weight-result').innerHTML = `→ Result: ${result.toFixed(6)} ${toLabel}`;
+    }
+
+    // ---- Temperature ----
+    function convertTemperature(value, from, to) {
+        if (isNaN(value)) return 0;
+        let celsius;
+        // Convert to Celsius first
+        if (from === 'celsius') celsius = value;
+        else if (from === 'fahrenheit') celsius = (value - 32) * 5/9;
+        else if (from === 'kelvin') celsius = value - 273.15;
+        else return 0;
+        // Convert from Celsius to target
+        if (to === 'celsius') return celsius;
+        else if (to === 'fahrenheit') return celsius * 9/5 + 32;
+        else if (to === 'kelvin') return celsius + 273.15;
+        return 0;
+    }
+
+    function updateTemp() {
+        let value = parseFloat(document.getElementById('temp-value').value);
+        if (isNaN(value)) value = 0;
+        const from = document.getElementById('temp-from').value;
+        const to = document.getElementById('temp-to').value;
+        const result = convertTemperature(value, from, to);
+        const toLabel = document.getElementById('temp-to').options[document.getElementById('temp-to').selectedIndex].text;
+        let symbol = '';
+        if (to === 'celsius') symbol = '°C';
+        else if (to === 'fahrenheit') symbol = '°F';
+        else symbol = 'K';
+        document.getElementById('temp-result').innerHTML = `→ Result: ${result.toFixed(2)} ${symbol}`;
+    }
+
+    // Attach event listeners
+    const lengthInputs = ['length-value', 'length-from', 'length-to'];
+    lengthInputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateLength);
+        document.getElementById(id).addEventListener('change', updateLength);
+    });
+
+    const weightInputs = ['weight-value', 'weight-from', 'weight-to'];
+    weightInputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateWeight);
+        document.getElementById(id).addEventListener('change', updateWeight);
+    });
+
+    const tempInputs = ['temp-value', 'temp-from', 'temp-to'];
+    tempInputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateTemp);
+        document.getElementById(id).addEventListener('change', updateTemp);
+    });
+
+    // Initial calculations
+    updateLength();
+    updateWeight();
+    updateTemp();
+</script>
+</body>
+</html>        .header::before {
             content: "✦ ✦ ✦";
             position: absolute;
             bottom: 10px;

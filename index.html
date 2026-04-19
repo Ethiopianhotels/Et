@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ethiopian Proverbs | Daily Wisdom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            max-width: 550px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        .header {
+            background: #0f2a4f;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.85;
+            font-size: 0.85rem;
+        }
+
+        .quote-container {
+            padding: 40px 30px;
+            background: #fef9e8;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: #c2410c;
+            opacity: 0.4;
+            margin-bottom: 10px;
+        }
+
+        .proverb {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            color: #1e293b;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .meaning {
+            font-size: 1rem;
+            color: #475569;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .button-group {
+            padding: 20px 30px 30px;
+            background: white;
+        }
+
+        .generate-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .generate-btn:active {
+            transform: scale(0.97);
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: 15px;
+            font-size: 0.7rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .loading {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="header">
+        <h1>📜 Ethiopian Proverbs</h1>
+        <p>Wisdom passed down through generations</p>
+    </div>
+    <div class="quote-container" id="quoteContainer">
+        <div class="quote-icon">"</div>
+        <div class="proverb" id="proverbText">Click the button for wisdom...</div>
+        <div class="meaning" id="meaningText"></div>
+    </div>
+    <div class="button-group">
+        <button class="generate-btn" id="generateBtn">✨ New Proverb</button>
+    </div>
+    <div class="footer">
+        <p>🌍 Ethiopian oral tradition • Daily inspiration</p>
+    </div>
+</div>
+
+<script>
+    // Built-in proverbs (100% reliable, no API needed)
+    const proverbs = [
+        {
+            text: "When spider webs unite, they can tie up a lion.",
+            meaning: "Unity is strength. Working together, even the weak can overcome the strong."
+        },
+        {
+            text: "He who learns, teaches.",
+            meaning: "Knowledge is meant to be shared. Teaching reinforces learning."
+        },
+        {
+            text: "A friend is someone who knows the song in your heart and can sing it back to you when you have forgotten the words.",
+            meaning: "True friends understand you deeply and support you in difficult times."
+        },
+        {
+            text: "Do not look where you fell, but where you slipped.",
+            meaning: "Focus on the root cause of a problem, not just the consequence."
+        },
+        {
+            text: "The hand that rocks the cradle rules the nation.",
+            meaning: "Mothers and caregivers shape the future by raising children well."
+        },
+        {
+            text: "Patience is the key to paradise.",
+            meaning: "Good things come to those who wait and persevere."
+        },
+        {
+            text: "One who plants grapes by the roadside will have his wine drunk by donkeys.",
+            meaning: "If you don't protect what's yours, others will take advantage."
+        },
+        {
+            text: "A lion does not turn around when a small dog barks.",
+            meaning: "Don't let minor distractions or insults derail you from your goals."
+        },
+        {
+            text: "When a king has good counselors, his reign is peaceful.",
+            meaning: "Good leadership requires wise advice from trusted people."
+        },
+        {
+            text: "The fool speaks, the wise man listens.",
+            meaning: "Listening more than speaking is a sign of wisdom."
+        },
+        {
+            text: "A river that forgets its source will soon dry up.",
+            meaning: "Never forget where you came from or those who helped you."
+        },
+        {
+            text: "Cross the river in a crowd and the crocodile won't eat you.",
+            meaning: "There's safety in numbers and in community."
+        },
+        {
+            text: "Morning is wiser than evening.",
+            meaning: "Sleep on a problem; you'll have a better solution in the morning."
+        },
+        {
+            text: "He who refuses to obey cannot command.",
+            meaning: "To be a good leader, you must first learn to follow."
+        },
+        {
+            text: "The teeth are smiling, but is the heart?",
+            meaning: "Appearances can be deceiving; true feelings may be hidden."
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function getRandomProverb() {
+        let newIndex = Math.floor(Math.random() * proverbs.length);
+        // Avoid repeating the same proverb twice in a row
+        while (newIndex === currentIndex && proverbs.length > 1) {
+            newIndex = Math.floor(Math.random() * proverbs.length);
+        }
+        currentIndex = newIndex;
+        return proverbs[currentIndex];
+    }
+
+    function displayRandomProverb() {
+        const btn = document.getElementById('generateBtn');
+        const proverbDiv = document.getElementById('proverbText');
+        const meaningDiv = document.getElementById('meaningText');
+        
+        btn.disabled = true;
+        btn.textContent = "🔄 Loading...";
+        proverbDiv.classList.add('loading');
+        
+        // Simulate tiny delay for smooth transition
+        setTimeout(() => {
+            const p = getRandomProverb();
+            proverbDiv.textContent = p.text;
+            meaningDiv.textContent = p.meaning;
+            proverbDiv.classList.remove('loading');
+            btn.disabled = false;
+            btn.textContent = "✨ New Proverb";
+        }, 150);
+    }
+
+    // Event listener
+    document.getElementById('generateBtn').addEventListener('click', displayRandomProverb);
+    
+    // Show a random proverb on page load
+    displayRandomProverb();
+</script>
+</body>
+</html>
